@@ -3,7 +3,9 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
+import morgan from 'morgan';import workoutRoutes from './routes/workouts';
+import exerciseRoutes from './routes/exercises';
+
 
 
 const app = express();
@@ -13,6 +15,8 @@ app.use(helmet());
 app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:3000' }));
 app.use(morgan('dev'));
 app.use(express.json());
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/exercises', exerciseRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'Server is running' });
