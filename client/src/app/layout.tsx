@@ -6,6 +6,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'FitTrack',
   description: 'Track your workouts and PRs',
+  viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({

@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
+import { useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
     { href: '/dashboard', label: '🏠 Dashboard' },
@@ -20,7 +22,8 @@ export default function Navbar() {
           FitTrack
         </Link>
 
-        <div className="flex items-center gap-6">
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-6">
           {links.map(link => (
             <Link
               key={link.href}
@@ -36,7 +39,36 @@ export default function Navbar() {
           ))}
           <UserButton />
         </div>
+
+        {/* Mobile menu button */}
+        <div className="flex items-center gap-3 md:hidden">
+          <UserButton />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-gray-600 focus:outline-none"
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="md:hidden mt-3 flex flex-col gap-3 border-t pt-3">
+          {links.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className={`text-sm font-medium px-2 py-1 rounded hover:bg-gray-100 ${
+                pathname === link.href ? 'text-blue-600 font-semibold' : 'text-gray-600'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

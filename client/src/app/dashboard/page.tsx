@@ -68,19 +68,20 @@ export default function Dashboard() {
         <h1 className="text-3xl font-bold">Dashboard</h1>
       </div>
 
-      <Link
-        href="/workouts/log"
-        className="block w-full bg-blue-600 text-white text-center rounded p-4 font-semibold hover:bg-blue-700 mb-4"
-      >
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <Link
+          href="/workouts/log"
+          className="flex-1 bg-blue-600 text-white text-center rounded p-4 font-semibold hover:bg-blue-700"
+        >
         + Log New Workout
-      </Link>
-
-      <Link
-        href="/progress"
-        className="block w-full bg-purple-600 text-white text-center rounded p-4 font-semibold hover:bg-purple-700 mb-8"
-      >
-        🏆 View Personal Records
-      </Link>
+        </Link>
+        <Link
+          href="/progress"
+          className="flex-1 bg-purple-600 text-white text-center rounded p-4 font-semibold hover:bg-purple-700"
+        > 
+          🏆 Personal Records
+        </Link>
+      </div>
 
       <h2 className="text-xl font-semibold mb-4">Recent Workouts</h2>
 

@@ -136,8 +136,8 @@ export default function LogWorkout() {
       {/* Add Set */}
       <div className="bg-gray-50 p-4 rounded-lg mb-6">
         <h2 className="text-lg font-semibold mb-3">Add Set</h2>
-        <div className="grid grid-cols-3 gap-3 mb-3">
-          <div className="col-span-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+          <div className="sm:col-span-1 flex items-end">
             <label className="block text-sm font-medium mb-1">Exercise</label>
             <select
               value={selectedExercise}
