@@ -29,7 +29,6 @@ export default function Dashboard() {
     const syncAndFetch = async () => {
       if (!user) return;
 
-      // Sync user to database
       try {
         await api.post('/api/users/sync', {
           id: user.id,
@@ -40,7 +39,6 @@ export default function Dashboard() {
         console.error('Failed to sync user', err);
       }
 
-      // Fetch workouts
       try {
         const res = await api.get(`/api/workouts/${user.id}`);
         setWorkouts(res.data);
@@ -54,6 +52,16 @@ export default function Dashboard() {
     if (isLoaded && user) syncAndFetch();
   }, [isLoaded, user]);
 
+  const deleteWorkout = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this workout?')) return;
+    try {
+      await api.delete(`/api/workouts/${id}`);
+      setWorkouts(workouts.filter(w => w.id !== id));
+    } catch (err) {
+      console.error('Failed to delete workout', err);
+    }
+  };
+
   return (
     <main className="max-w-2xl mx-auto p-6">
       <div className="flex items-center justify-between mb-8">
@@ -62,7 +70,7 @@ export default function Dashboard() {
 
       <Link
         href="/workouts/log"
-        className="block w-full bg-blue-600 text-white text-center rounded p-4 font-semibold hover:bg-blue-700 mb-8"
+        className="block w-full bg-blue-600 text-white text-center rounded p-4 font-semibold hover:bg-blue-700 mb-4"
       >
         + Log New Workout
       </Link>
@@ -70,9 +78,9 @@ export default function Dashboard() {
       <Link
         href="/progress"
         className="block w-full bg-purple-600 text-white text-center rounded p-4 font-semibold hover:bg-purple-700 mb-8"
-        >
+      >
         🏆 View Personal Records
-        </Link>
+      </Link>
 
       <h2 className="text-xl font-semibold mb-4">Recent Workouts</h2>
 
@@ -87,9 +95,17 @@ export default function Dashboard() {
           <div key={workout.id} className="border rounded-lg p-4 bg-white shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold">{workout.name}</h3>
-              <span className="text-sm text-gray-500">
-                {new Date(workout.date).toLocaleDateString()}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-500">
+                  {new Date(workout.date).toLocaleDateString()}
+                </span>
+                <button
+                  onClick={() => deleteWorkout(workout.id)}
+                  className="text-red-500 hover:text-red-700 text-sm font-medium"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
             {workout.notes && (
               <p className="text-gray-500 text-sm mb-3">{workout.notes}</p>
