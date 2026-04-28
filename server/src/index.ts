@@ -14,11 +14,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(helmet());
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://fitness-app-two-lake.vercel.app'
-  ],
-  credentials: true
+  origin: '*',
+  credentials: false
 }));
 app.use(morgan('dev'));
 app.use(express.json());
