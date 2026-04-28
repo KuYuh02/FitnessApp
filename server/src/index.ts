@@ -3,7 +3,6 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import pool from './db/index';
 import workoutRoutes from './routes/workouts';
