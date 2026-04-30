@@ -10,7 +10,8 @@ router.post('/sync', async (req: Request, res: Response) => {
     await query(
       `INSERT INTO users (id, email, name) 
        VALUES ($1, $2, $3) 
-       ON CONFLICT (id) DO UPDATE SET email = $2, name = $3`,
+       ON CONFLICT (id) DO UPDATE SET email = $2, name = $3
+       ON CONFLICT (email) DO UPDATE SET id = $1, name = $3`,
       [id, email, name]
     );
     res.status(200).json({ message: 'User synced' });
