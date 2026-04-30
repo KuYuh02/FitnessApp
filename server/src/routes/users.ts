@@ -5,8 +5,8 @@ const router = Router();
 
 // Create or update user on login
 router.post('/sync', async (req: Request, res: Response) => {
+  const { id, email, name } = req.body;
   try {
-    const { id, email, name } = req.body;
     await query(
       `INSERT INTO users (id, email, name) 
        VALUES ($1, $2, $3) 
@@ -15,7 +15,6 @@ router.post('/sync', async (req: Request, res: Response) => {
     );
     res.status(200).json({ message: 'User synced' });
   } catch (error) {
-    // If email conflict, update the existing user's id
     try {
       await query(
         `UPDATE users SET id = $1, name = $3 WHERE email = $2`,
